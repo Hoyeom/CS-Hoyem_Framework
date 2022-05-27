@@ -78,6 +78,7 @@ namespace Manager.Core
 
             GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
             T sceneUI = Util.GetOrAddComponent<T>(go);
+            _sceneUI = sceneUI;
             
             go.transform.SetParent(Root.transform);
 

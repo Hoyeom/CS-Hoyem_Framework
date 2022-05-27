@@ -17,5 +17,11 @@
         {
             Click
         }
+        
+        public enum Table
+        {
+            None,
+            
+        }
     }
 }

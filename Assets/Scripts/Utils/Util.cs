@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Utils
 {
@@ -57,7 +61,6 @@ namespace Utils
                     if (string.IsNullOrEmpty(name) || component.name == name)
                         return component;
                 }
-                
             }
             
             return null;
@@ -69,5 +72,25 @@ namespace Utils
                 component = go.AddComponent<T>();
             return component;
         }
+
+        public static void SetPrivateData<T>(Object obj, string[] fieldNames, string[] datas)
+        {
+            for (int i = 0; i < datas.Length; i++)
+            {
+                FieldInfo info = typeof(T).GetField(fieldNames[i],
+                    BindingFlags.NonPublic |
+                    BindingFlags.Instance);
+               
+                if (info == null)
+                    throw new Exception($"Field Name: {fieldNames[i]} / Data: {datas[i]}");
+                
+                info.SetValue(obj,
+                    info.FieldType.IsEnum ? 
+                        Convert.ToSByte(datas[i]) :
+                        Convert.ChangeType(datas[i], info.FieldType));
+            }
+        }
+
+
     }
 }
