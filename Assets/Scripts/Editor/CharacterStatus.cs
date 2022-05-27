@@ -2,8 +2,7 @@
 using UnityEngine;
 using Utils;
 
-[CreateAssetMenu(fileName = "NewStat", menuName = "Stat")]
-public class Stat : ScriptableObject, ITableSetter
+public class CharacterStatus : ScriptableObject, ITableSetter
 {
     [SerializeField] private ulong id;
     [SerializeField] private string unitName;
@@ -24,7 +23,7 @@ public class Stat : ScriptableObject, ITableSetter
     [SerializeField] private FireArm fireArm;
     [SerializeField] private bool isCover;
         
-    [Header("Stat")]
+    [Header("Status")]
     [SerializeField] private int maxHealth;
     [SerializeField] private int atkPower;
     [SerializeField] private int defPower;
@@ -40,9 +39,7 @@ public class Stat : ScriptableObject, ITableSetter
     [SerializeField] private int cCDef;
     [SerializeField] private int costGen;
 
-
-
-
+    
     #region Getter
     public ulong ID => id;
     
@@ -50,7 +47,7 @@ public class Stat : ScriptableObject, ITableSetter
 
 
     public void SetData(string[] fieldNames, string[] datas)
-        => Util.SetPrivateData<Stat>(this, fieldNames, datas);
+        => Util.SetPrivateData<CharacterStatus>(this, fieldNames, datas);
 }
 
 

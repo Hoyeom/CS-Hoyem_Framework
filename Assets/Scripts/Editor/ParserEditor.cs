@@ -19,7 +19,7 @@ namespace Manager.Core
         [MenuItem("Parser/LoadChatacterStat")]
         private static void LoadStat()
         {
-            LoadData<Stat>(Define.Table.CharacterStatus);
+            LoadData<CharacterStatus>(Define.Table.CharacterStatus);
         }
         
         private static void LoadData<T>(Define.Table type = Define.Table.None) where T : ScriptableObject, ITableSetter
