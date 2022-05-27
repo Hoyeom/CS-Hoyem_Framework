@@ -12,5 +12,10 @@
         {
             None,
         }
+        
+        public enum UIEvent
+        {
+            Click
+        }
     }
 }

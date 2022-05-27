@@ -15,16 +15,20 @@ public class Managers : MonoBehaviour
             return _instance;
         }
     }
-    public static string NAME = "@Managers";
+
+    private static readonly string NAME = "@Managers";
 
     private ResourceManager _resource = new ResourceManager();
     private SceneManagerEx _scene = new SceneManagerEx();
     private AudioManager _audio = new AudioManager();
     private PoolManager _pool = new PoolManager();
+    private UIManager _ui = new UIManager();
     public static ResourceManager Resource => Instance._resource;
     public static SceneManagerEx Scene => Instance._scene;
     public static AudioManager Audio => Instance._audio;
     public static PoolManager Pool => Instance._pool;
+    public static UIManager UI => Instance._ui;
+    
     
     private void Awake() => name = NAME;
     private void Start() => Initialize();
@@ -56,6 +60,7 @@ public class Managers : MonoBehaviour
     {
         Pool.Clear();
         Audio.Clear();
+        UI.Clear();
         Scene.Clear();
     }
 
