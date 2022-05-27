@@ -16,10 +16,10 @@ namespace Manager.Core
         
         private static readonly string Format = ".csv";
 
-        [MenuItem("Parser/LoadStat")]
+        [MenuItem("Parser/LoadChatacterStat")]
         private static void LoadStat()
         {
-            LoadData<Stat>(Define.Table.None);
+            LoadData<Stat>(Define.Table.CharacterStatus);
         }
         
         private static void LoadData<T>(Define.Table type = Define.Table.None) where T : ScriptableObject, ITableSetter

@@ -18,9 +18,9 @@ public class Stat : ScriptableObject, ITableSetter
     [SerializeField] private TerrainPower cityPower;
     [SerializeField] private TerrainPower desertPower;
     [SerializeField] private TerrainPower indoorPower;
-    [SerializeField] private int equip1;
-    [SerializeField] private int equip2;
-    [SerializeField] private int equip3;
+    [SerializeField] private Equip1 equip1;
+    [SerializeField] private Equip2 equip2;
+    [SerializeField] private Equip3 equip3;
     [SerializeField] private FireArm fireArm;
     [SerializeField] private bool isCover;
         
@@ -72,14 +72,12 @@ public enum SchoolEnum : sbyte
     Odyssey,
     Event = 99
 }
-
 public enum CombatClass : sbyte
 {
     None,
     Striker,
     Special
 }
-
 public enum Role : sbyte
 {
     None,
@@ -89,7 +87,6 @@ public enum Role : sbyte
     Healer,
     Tactical
 }
-
 public enum CombatPosEnum : sbyte
 {
     None,
@@ -97,17 +94,15 @@ public enum CombatPosEnum : sbyte
     Middle,
     Back
 }
-
 public enum AtkTypeEnum : sbyte
 {
     None,
     Normal,
     Explosive,
-    Piercing,
+    Penetration,
     Mystic,
     Siege
 }
-
 public enum DefTypeEnum : sbyte
 {
     None,
@@ -116,7 +111,27 @@ public enum DefTypeEnum : sbyte
     Special,
     Structure
 }
-
+public enum Equip1 : sbyte
+{
+    None,
+    Hat,
+    Glove,
+    Shoe,
+}
+public enum Equip2 : sbyte
+{
+    None,
+    Bag,
+    Badge,
+    Hairpin,
+}
+public enum Equip3 : sbyte
+{
+    None,
+    Charm,
+    Watch,
+    Necklace,
+}
 public enum FireArm : sbyte
 {
     None,
@@ -132,7 +147,6 @@ public enum FireArm : sbyte
     Railgun,
     Mortar
 }
-
 public enum TerrainPower : sbyte
 {
     None,

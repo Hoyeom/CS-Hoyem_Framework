@@ -21,7 +21,7 @@
         public enum Table
         {
             None,
-            
+            CharacterStatus,
         }
     }
 }
