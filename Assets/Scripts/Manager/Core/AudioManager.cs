@@ -33,6 +33,32 @@ namespace Manager.Core
             _audioSources[(int) Define.Sound.Bgm].loop = true;
         }
 
+        public void Play(AudioClip audioClip,Define.Sound type = Define.Sound.Effect)
+        {
+            if(audioClip == null)
+                return;
+            if (type == Define.Sound.Bgm)
+            {
+                AudioSource audioSource = _audioSources[(int) Define.Sound.Bgm];
+                
+                if(audioSource.isPlaying)
+                    audioSource.Stop();
+
+                audioSource.clip = audioClip;
+                audioSource.Play();
+            }
+            else
+            {
+                AudioSource audioSource = _audioSources[(int) Define.Sound.Effect];
+                audioSource.PlayOneShot(audioClip);
+            }
+        }
+
+        public void Play(string path, Define.Sound type = Define.Sound.Effect)
+        {
+            
+        }
+        
         public void Clear()
         {
             foreach (AudioSource audioSource in _audioSources)

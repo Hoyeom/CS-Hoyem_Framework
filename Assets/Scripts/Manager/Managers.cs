@@ -7,7 +7,7 @@ public class Managers : MonoBehaviour
 {
     private static Managers _instance;
 
-    public static Managers Instance
+    private static Managers Instance
     {
         get
         {
@@ -15,12 +15,16 @@ public class Managers : MonoBehaviour
             return _instance;
         }
     }
-
-
     public static string NAME = "@Managers";
 
+    private ResourceManager _resource = new ResourceManager();
+    private SceneManagerEx _scene = new SceneManagerEx();
     private AudioManager _audio = new AudioManager();
+    private PoolManager _pool = new PoolManager();
+    public static ResourceManager Resource => Instance._resource;
+    public static SceneManagerEx Scene => Instance._scene;
     public static AudioManager Audio => Instance._audio;
+    public static PoolManager Pool => Instance._pool;
     
     private void Awake() => name = NAME;
     private void Start() => Initialize();
@@ -45,11 +49,14 @@ public class Managers : MonoBehaviour
     private static void ManagersInit()
     {
         _instance._audio.Initialize();
+        _instance._pool.Initialize();
     }
     
-    public void ManagersClear()
+    public static void ManagersClear()
     {
+        Pool.Clear();
         Audio.Clear();
+        Scene.Clear();
     }
 
     #endregion

@@ -5,7 +5,12 @@
         public enum Sound
         {
             Bgm,
-            Fx,
+            Effect,
+        }
+        
+        public enum Scene
+        {
+            None,
         }
     }
 }
