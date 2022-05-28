@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+    public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler,IPointerExitHandler
     {
         private float _defaultSize = 1.0f;
         private float _downSize = 0.85f;
@@ -21,13 +21,23 @@ namespace UI
         public void OnPointerDown(PointerEventData eventData)
         {
             OnDownHandler?.Invoke(eventData);
-            transform.DOScale(_downSize, _tweenSpeed);
+            TweenScale(_downSize,_tweenSpeed);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             OnUpHandler?.Invoke(eventData);
-            transform.DOScale(_defaultSize, _tweenSpeed);
+            TweenScale(_defaultSize,_tweenSpeed);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TweenScale(_defaultSize,_tweenSpeed);
+        }
+
+        private void TweenScale(float scale, float tweenSpeed)
+        {
+            transform.DOScale(scale, tweenSpeed);
         }
     }
 }
