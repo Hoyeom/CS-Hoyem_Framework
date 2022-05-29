@@ -16,6 +16,8 @@ namespace Manager.Core
         
         private static readonly string Format = ".csv";
 
+        private static readonly string VariantName = "sOData";
+        
         [MenuItem("Parser/LoadChatacterStat")]
         private static void LoadStat()
         {
@@ -38,14 +40,20 @@ namespace Manager.Core
                 string[] datas = streamReader.ReadLine().Split(',');
                 T sO = ScriptableObject.CreateInstance<T>();
                 sO.SetData(fieldNames,datas);
-
-                AssetDatabase.DeleteAsset($"{SavePath}{tableName}/{sO.ID.ToString()}.asset");
-                AssetDatabase.CreateAsset(sO,$"{SavePath}{tableName}/{sO.ID.ToString()}.asset");
+                
+                string path = $"{SavePath}{tableName}/{sO.ID.ToString()}.asset";
+                AssetDatabase.DeleteAsset(path);
+                AssetDatabase.CreateAsset(sO, path);
+                
+                AssetImporter.GetAtPath(path)
+                    .SetAssetBundleNameAndVariant(
+                    Util.GetAssetBundleName(type), 
+                    VariantName);
             }
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-
+        
         private static void CreatePath()
         {
             if (!Directory.Exists(DataPath))

@@ -90,5 +90,18 @@ namespace Utils
                         : Convert.ChangeType(datas[i], info.FieldType));
             }
         }
+
+        public static string GetAssetBundleName(Define.Table type)
+        {
+            switch (type)
+            {
+                case Define.Table.None:
+                    return "None";
+                case Define.Table.CharacterStatus:
+                    return "CharacterStatus";
+            }
+
+            return null;
+        }
     }
 }

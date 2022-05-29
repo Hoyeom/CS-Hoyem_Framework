@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 3238867387
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ef06322eaeb40d7470ef296cb76634c7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/ScriptableObjects/CharacterStatus/1010101.asset
+Dependencies: []
