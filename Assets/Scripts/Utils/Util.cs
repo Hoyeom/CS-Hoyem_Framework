@@ -91,17 +91,6 @@ namespace Utils
             }
         }
 
-        public static string GetAssetBundleName(Define.Table type)
-        {
-            switch (type)
-            {
-                case Define.Table.None:
-                    return "None";
-                case Define.Table.CharacterStatus:
-                    return "CharacterStatus";
-            }
 
-            return null;
-        }
     }
 }

@@ -44,16 +44,11 @@ namespace Manager.Core
                 string path = $"{SavePath}{tableName}/{sO.ID.ToString()}.asset";
                 AssetDatabase.DeleteAsset(path);
                 AssetDatabase.CreateAsset(sO, path);
-                
-                AssetImporter.GetAtPath(path)
-                    .SetAssetBundleNameAndVariant(
-                    Util.GetAssetBundleName(type), 
-                    VariantName);
             }
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-        
+
         private static void CreatePath()
         {
             if (!Directory.Exists(DataPath))
