@@ -15,14 +15,6 @@ namespace Manager.Core
         private static readonly string[] TableNames = Enum.GetNames(typeof(Define.Table));
         
         private static readonly string Format = ".csv";
-
-        private static readonly string VariantName = "sOData";
-        
-        [MenuItem("Parser/LoadChatacterStat")]
-        private static void LoadStat()
-        {
-            LoadData<CharacterStatus>(Define.Table.CharacterStatus);
-        }
         
         private static void LoadData<T>(Define.Table type = Define.Table.None) where T : ScriptableObject, ITableSetter
         {

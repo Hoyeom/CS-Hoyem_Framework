@@ -84,10 +84,12 @@ namespace Utils
                 if (info == null)
                     throw new Exception($"Field Name: {fieldNames[i]} / Data: {datas[i]}");
 
+                Type fieldType = info.FieldType;
+                
                 info.SetValue(obj,
-                    info.FieldType.IsEnum
-                        ? Enum.Parse(info.FieldType, datas[i])
-                        : Convert.ChangeType(datas[i], info.FieldType));
+                    fieldType.IsEnum ?
+                        Enum.Parse(fieldType, datas[i]) :
+                        Convert.ChangeType(datas[i], info.FieldType));
             }
         }
 
