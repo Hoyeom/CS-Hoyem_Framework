@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Status;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Content
 {
@@ -14,17 +15,18 @@ namespace Content
         protected override void Start()
         {
             rigid = GetComponent<Rigidbody>();
+            Managers.Game.Camera.SetTarget(transform);
             base.Start();
         }
 
         public override void MouseDelta(Vector2 input)
         {
-            
+            Camera.main.GetComponent<CameraController>();
         }
 
         private void Update()
         {
-            rigid.MovePosition(rigid.position + velocity * Time.deltaTime);
+            rigid.MovePosition(rigid.position + rigid.velocity + velocity * Time.deltaTime);
         }
 
         public override void MoveInput(Vector2 input)

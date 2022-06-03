@@ -18,6 +18,18 @@ namespace Manager.Content
                 return _controller;
             }
         }
+
+        private CameraController _camera;
+
+        public CameraController Camera
+        {
+            get
+            {
+                if (_camera == null && UnityEngine.Camera.main != null)
+                    _camera = UnityEngine.Camera.main.gameObject.GetOrAddComponent<CameraController>();
+                return _camera;
+            }
+        }
         
         public void Initialize()
         {
