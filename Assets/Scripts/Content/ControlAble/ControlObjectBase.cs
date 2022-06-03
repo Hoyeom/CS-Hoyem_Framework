@@ -3,21 +3,15 @@ using UnityEngine;
 
 namespace Content
 {
-    public class ControlObjectBase : MonoBehaviour
+    public abstract class ControlObjectBase : MonoBehaviour
     {
-        private void Start()
+        protected virtual void Start()
         {
-            Managers.Game.Controller.SubscribeControl(this);
+            Managers.Game.Controller.SubscribeControl(this); // Test
         }
 
-        public void MouseDelta(Vector2 input)
-        {
-            Debug.Log($"Mouse {input}");
-        }
+        public abstract void MouseDelta(Vector2 input);
 
-        public void MoveInput(Vector2 input)
-        {
-            Debug.Log($"Move {input}");
-        }
+        public abstract void MoveInput(Vector2 input);
     }
 }

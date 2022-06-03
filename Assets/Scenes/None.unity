@@ -450,9 +450,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 616785269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5edffe581d944438af25dba962bf83fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f09598d89d74975bf9992dd33a804ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _statusBase: {fileID: 11400000, guid: dcea6a81f4aa2894797cf61c8c836d79, type: 2}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &628773698
 GameObject:
   m_ObjectHideFlags: 0
