@@ -18,13 +18,23 @@ namespace Utils
         /// <returns></returns>
         public static T GetOrNewComponent<T>(string name) where T : Component
         {
-            GameObject go = GameObject.Find(name);
-            if (go == null)
-            {
-                go = new GameObject(name);
-                go.AddComponent(typeof(T));
-            }
+            T component = Object.FindObjectOfType<T>();
+            GameObject go = null;
             
+
+            if (component == null)
+            {
+                go ??= GameObject.Find(name);
+                if (go == null)
+                {
+                    go = new GameObject();
+                    component = (T) go.AddComponent(typeof(T));
+                }
+            }
+            else
+                go = component.gameObject;
+
+            go.name = name;
             return go.GetComponent<T>();
         }
 

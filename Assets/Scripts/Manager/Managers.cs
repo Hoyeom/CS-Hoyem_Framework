@@ -1,4 +1,5 @@
 using System;
+using Manager.Content;
 using Manager.Core;
 using UnityEngine;
 using Utils;
@@ -16,6 +17,9 @@ public class Managers : MonoBehaviour
         }
     }
 
+    private GameManager _game = new GameManager();
+    public static GameManager Game => Instance._game;
+    
     private static readonly string NAME = "@Managers";
 
     private ResourceManager _resource = new ResourceManager();
@@ -56,6 +60,7 @@ public class Managers : MonoBehaviour
     {
         _instance._audio.Initialize();
         _instance._data.Initialize();
+        _instance._game.Initialize();
         _instance._pool.Initialize();
     }
     
@@ -64,6 +69,7 @@ public class Managers : MonoBehaviour
         Pool.Clear();
         Audio.Clear();
         UI.Clear();
+        Game.Clear();
         Scene.Clear();
     }
 

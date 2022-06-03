@@ -10,7 +10,7 @@ namespace Manager.Core
     {
         public static string NAME = "@Sounds";
         private AudioSource[] _audioSources = new AudioSource[Enum.GetValues(typeof(Define.Sound)).Length];
-        private Dictionary<string, AudioSource> _audioClips = new Dictionary<string, AudioSource>();
+        private Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
         public void Initialize()
         {
@@ -56,7 +56,8 @@ namespace Manager.Core
 
         public void Play(string path, Define.Sound type = Define.Sound.Effect)
         {
-            
+            AudioClip audioClip = GetOrAddAudioClip(path,type);
+            Play(audioClip,type);
         }
         
         public void Clear()
@@ -69,7 +70,28 @@ namespace Manager.Core
             
             _audioClips.Clear();
         }
-        
-        
+
+        AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
+        {
+            if (path.Contains("Sounds/") == false)
+                path = $"Sounds/{path}";
+
+            AudioClip audioClip = null;
+
+            if (type == Define.Sound.Bgm)
+            {
+                audioClip = Managers.Resource.Load<AudioClip>(path);
+            }
+            else if(_audioClips.TryGetValue(path,out audioClip) == false)
+            {
+                audioClip = Managers.Resource.Load<AudioClip>(path);
+                _audioClips.Add(path,audioClip);
+            }
+
+            if (audioClip == null)
+                throw new Exception($"Missing Path {path}");
+
+            return audioClip;
+        }
     }
 }
