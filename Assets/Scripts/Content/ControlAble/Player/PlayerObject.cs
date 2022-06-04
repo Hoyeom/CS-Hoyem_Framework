@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Content
 {
-    public class UnitObject : ControlObjectBase
+    public class PlayerObject : ControlObjectBase
     {
         [SerializeField] private StatusBase _statusBase;
         [SerializeField] private Vector3 velocity = Vector3.zero;
@@ -14,12 +14,15 @@ namespace Content
 
         private Transform camRig;
         
-        protected override void Start()
+        
+        
+        protected override void Initialize()
         {
             rigid = GetComponent<Rigidbody>();
             Managers.Game.Camera.SetFollowTarget(transform);
             camRig = Managers.Game.Camera.GetRig();
-            base.Start();
+            Managers.Game.Camera.SetOffset(Vector3.up);
+            base.Initialize();
         }
 
         public override void MouseDelta(Vector2 input)
