@@ -10,7 +10,13 @@ public class CameraController : MonoBehaviour
     private Transform followTarget;
 
     private Action CameraAction;
-    
+
+    public Quaternion RigRotation
+    {
+        get => rig.rotation;
+        set => rig.rotation = value;
+    }
+
     private void Awake()
     {
         rig = transform.parent;
@@ -20,6 +26,8 @@ public class CameraController : MonoBehaviour
     {
         CameraAction?.Invoke();
     }
+
+    public Transform GetRig() => rig;
     
     public void SetTarget(Transform target)
     {
@@ -32,10 +40,20 @@ public class CameraController : MonoBehaviour
         CameraAction += Follow;
     }
 
+    public void SetFollowTarget(Transform target)
+    {
+        followTarget = target;
+
+        CameraAction -= Look;
+        CameraAction -= Follow;
+        CameraAction += Follow;
+    }
+    
     private void Follow()
     {
         rig.position = followTarget.position;
     }
+    
     
     private void Look()
     {

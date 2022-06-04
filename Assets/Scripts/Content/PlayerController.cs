@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
     private Controller _controller;
     
 
-    private List<ControlObjectBase> controlObjects = new List<ControlObjectBase>();
+    private List<ControlObjectBase> _controlAbles = new List<ControlObjectBase>();
     
 
     #region Unity Method
     
     private void OnEnable()
     {
-        controlObjects.Clear();
+        _controlAbles.Clear();
         if (_controller == null)
         {
             _controller = new Controller();
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
 
     private void OnDisable()
     {
-        controlObjects.Clear();
+        _controlAbles.Clear();
         if (_controller != null)
         {
             _controller.Disable();
@@ -67,27 +67,26 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
 
     private void OccurMouseInput(Vector2 input)
     {
-        foreach (ControlObjectBase controlAble in controlObjects)
+        foreach (ControlObjectBase controlAble in _controlAbles)
             controlAble.MouseDelta(input);
     }
     
     private void OccurMoveInput(Vector2 input)
     {
-        input.Normalize();
-        foreach (ControlObjectBase controlAble in controlObjects)
+        foreach (ControlObjectBase controlAble in _controlAbles)
             controlAble.MoveInput(input);
     }
 
     public void SubscribeControl(ControlObjectBase controlAble)
     {
-        if (!controlObjects.Contains(controlAble))
-            controlObjects.Add(controlAble);
+        if (!_controlAbles.Contains(controlAble))
+            _controlAbles.Add(controlAble);
     }
 
     public void UnsubScribeControl(ControlObjectBase controlAble)
     {
-        if (!controlObjects.Contains(controlAble))
-            controlObjects.Remove(controlAble);
+        if (!_controlAbles.Contains(controlAble))
+            _controlAbles.Remove(controlAble);
     }
 
 }

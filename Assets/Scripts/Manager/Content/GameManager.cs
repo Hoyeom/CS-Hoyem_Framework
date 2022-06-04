@@ -30,7 +30,7 @@ namespace Manager.Content
                 return _camera;
             }
         }
-        
+
         public void Initialize()
         {
             
