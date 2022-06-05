@@ -12,6 +12,7 @@ namespace Content
         
         private Rigidbody rigid;
 
+        private CameraController cam;
         private Transform camRig;
         
         
@@ -20,18 +21,25 @@ namespace Content
         {
             rigid = GetComponent<Rigidbody>();
             Managers.Game.Camera.SetFollowTarget(transform);
-            camRig = Managers.Game.Camera.GetRig();
+            cam = Managers.Game.Camera;
+            camRig = cam.GetRig();
             Managers.Game.Camera.SetOffset(Vector3.up);
             base.Initialize();
         }
 
         public override void MouseDelta(Vector2 input)
         {
-            Vector3 eulerAngle = camRig.eulerAngles;
-            camRig.eulerAngles = new Vector3(Mathf.Clamp(-input.y + eulerAngle.x, 0, 87), -input.x + eulerAngle.y);
+            cam.RotateCamera(input);
         }
 
         private void Update()
+        {
+            Move();
+            if(Keyboard.current.spaceKey.wasPressedThisFrame)
+                rigid.AddForce(Vector3.up * 5,ForceMode.Impulse);
+        }
+
+        private void Move()
         {
             Quaternion camY = Quaternion.Euler(new Vector3(0, camRig.eulerAngles.y, 0));
             

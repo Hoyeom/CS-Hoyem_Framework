@@ -289,6 +289,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470dc2e87e155634080574030dd87185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockLayer: 8
+  distance: 10
+  minDistance: 2
+  _target:
+    look: {fileID: 0}
+    follow: {fileID: 0}
+    offset: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +710,7 @@ GameObject:
   - component: {fileID: 1530135588}
   - component: {fileID: 1530135587}
   - component: {fileID: 1530135586}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

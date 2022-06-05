@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using Utils;
 
 public class CameraController : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class CameraController : MonoBehaviour
         public Vector3 GetLookPos() => look.position + offset;
         public Vector3 GetFollowPos() => follow.position + offset;
     }
-    
-    private Transform rig;
-    private float distance;
 
+    private Transform rig;
+    
+    [SerializeField] private Define.Layer blockLayer;
+    private int BlockLayer { get; set; }
+    [SerializeField] private float distance = 10;
+    [SerializeField] private float lerpTime = 2;
     [SerializeField] private Target _target = new Target();
 
     private Action CameraAction;
@@ -31,12 +35,14 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        BlockLayer = (int) blockLayer;
         rig = transform.parent;
     }
 
     private void LateUpdate()
     {
         CameraAction?.Invoke();
+        ClampDistance();
     }
 
     public Transform GetRig() => rig;
@@ -74,6 +80,18 @@ public class CameraController : MonoBehaviour
     {
         _target.offset = value;
     }
+
+    public void RotateCamera(Vector3 input, float min = -80, float max = 80)
+    {
+        Vector3 camRigEulerAngle = rig.eulerAngles;
+
+        float angleX = -input.y + camRigEulerAngle.x;
+        angleX = Mathf.Clamp((angleX > 180) ? angleX - 360 : angleX, min, max);
+
+        float angleY = -input.x + camRigEulerAngle.y;
+
+        rig.eulerAngles = new Vector3(angleX, angleY);
+    }
     
     private void Follow()
     {
@@ -85,5 +103,15 @@ public class CameraController : MonoBehaviour
     {
         transform.rotation = Quaternion.Lerp(transform.rotation,
             Quaternion.LookRotation(_target.GetLookPos() - transform.position), Time.deltaTime);
+    }
+
+    private void ClampDistance()
+    {
+        Ray ray = new Ray(rig.position, -transform.forward);
+        
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity,BlockLayer))
+            transform.localPosition = Mathf.Min(distance, hit.distance) * Vector3.back;
+        else
+            transform.localPosition = Vector3.Lerp(transform.localPosition, distance * Vector3.back, lerpTime * Time.deltaTime);
     }
 }

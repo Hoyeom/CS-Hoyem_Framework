@@ -23,5 +23,10 @@
             None,
             CharacterStatus,
         }
+
+        public enum Layer
+        {
+            BlockLayer = 1 << 3,
+        }
     }
 }
