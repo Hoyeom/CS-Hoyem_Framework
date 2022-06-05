@@ -2,6 +2,7 @@
 using Content.Status;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace Content
 {
@@ -10,47 +11,76 @@ namespace Content
         [SerializeField] private StatusBase _statusBase;
         [SerializeField] private Vector3 velocity = Vector3.zero;
         
+        [SerializeField] private LayerMask aimLayer;
+        
+        private Vector3 moveInput;
+        
         private Rigidbody rigid;
 
-        private CameraController cam;
+        private Camera cam;
         private Transform camRig;
+        private CameraController camController;
+
+        private float aimMaxDistance = 40;
         
-        
-        
+
         protected override void Initialize()
         {
             rigid = GetComponent<Rigidbody>();
+            
+            cam = Camera.main;
+            camController = Managers.Game.Camera;
+            camRig = camController.GetRig();
+            
+            
             Managers.Game.Camera.SetFollowTarget(transform);
-            cam = Managers.Game.Camera;
-            camRig = cam.GetRig();
-            Managers.Game.Camera.SetOffset(Vector3.up);
+            Managers.Game.Camera.SetOffset(Vector3.up * 4);
             base.Initialize();
         }
 
         public override void MouseDelta(Vector2 input)
         {
-            cam.RotateCamera(input);
+            camController.RotateCamera(input);
         }
 
         private void Update()
         {
             Move();
-            if(Keyboard.current.spaceKey.wasPressedThisFrame)
-                rigid.AddForce(Vector3.up * 5,ForceMode.Impulse);
         }
 
         private void Move()
         {
             Quaternion camY = Quaternion.Euler(new Vector3(0, camRig.eulerAngles.y, 0));
             
+            
             rigid.MovePosition(rigid.position + camY * velocity * Time.deltaTime);
+            
+            if (!(moveInput.magnitude > 0)) return;
+            Quaternion targetRotation = camY * Quaternion.LookRotation(moveInput);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 20 * Time.deltaTime);
         }
 
         public override void MoveInput(Vector2 input)
         {
             Vector3 dir = input;
             (dir.y, dir.z) = (dir.z, dir.y);
-            velocity = dir * _statusBase.speed;
+            
+            moveInput = dir;
+            velocity = (moveInput * _statusBase.speed);
+        }
+
+        public override void FireInput(Define.PressEvent phase)
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+            bool isHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, aimLayer.value);
+
+            Vector3 point = isHit
+                ? hit.point
+                : (cam.transform.position + cam.transform.forward * aimMaxDistance);
+
+            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.position = point;
         }
     }
 }

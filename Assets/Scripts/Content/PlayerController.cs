@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 public class PlayerController : MonoBehaviour, Controller.IPlayerActions
 {
@@ -11,7 +12,10 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
     
 
     private List<ControlObjectBase> _controlAbles = new List<ControlObjectBase>();
-    
+
+
+    private float clickDuration = 0.2f;
+    private float clickTimer = 0;
 
     #region Unity Method
     
@@ -61,7 +65,22 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
                 break;
         }
     }
-    
+
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+        {
+            case InputActionPhase.Started:
+                clickTimer = Time.time;
+                OccurFireInput(Define.PressEvent.Down);
+                break;
+            case InputActionPhase.Canceled:
+                if(clickTimer + clickDuration > Time.time)
+                    OccurFireInput(Define.PressEvent.Click); 
+                OccurFireInput(Define.PressEvent.Up);
+                break;
+        }
+    }
 
     #endregion
 
@@ -77,6 +96,12 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
             controlAble.MoveInput(input);
     }
 
+    private void OccurFireInput(Define.PressEvent phase)
+    {
+        foreach (ControlObjectBase controlAble in _controlAbles)
+            controlAble.FireInput(phase);
+    }
+    
     public void SubscribeControl(ControlObjectBase controlAble)
     {
         if (!_controlAbles.Contains(controlAble))

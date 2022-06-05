@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Utils;
 
 namespace Content
 {
@@ -16,7 +17,7 @@ namespace Content
         }
         
         public abstract void MouseDelta(Vector2 input);
-
         public abstract void MoveInput(Vector2 input);
+        public abstract void FireInput(Define.PressEvent phase);
     }
 }

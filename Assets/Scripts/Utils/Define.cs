@@ -28,5 +28,12 @@
         {
             BlockLayer = 1 << 3,
         }
+        
+        public enum PressEvent
+        {
+            Click,
+            Down,
+            Up,
+        }
     }
 }

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     private Transform rig;
     
-    [SerializeField] private Define.Layer blockLayer;
+    [SerializeField] private Define.Layer blockLayer = Define.Layer.BlockLayer;
     private int BlockLayer { get; set; }
     [SerializeField] private float distance = 10;
     [SerializeField] private float lerpTime = 2;
