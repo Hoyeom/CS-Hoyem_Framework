@@ -29,6 +29,8 @@ namespace Content
 
         private float aimMaxDistance = 40;
 
+        private bool isGround;
+
         protected override void Initialize()
         {
             rigid = GetComponent<Rigidbody>();
@@ -52,12 +54,16 @@ namespace Content
         private void Update()
         {
             camY = Quaternion.Euler(new Vector3(0, camRig.eulerAngles.y, 0));
+            GroundCheck();
             curState.OnUpdate();
         }
 
         public void Move()
         {
             rigid.MovePosition(rigid.position + camY * velocity * Time.deltaTime);
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && isGround)
+                rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
         }
 
         public void Rotate()
@@ -107,6 +113,15 @@ namespace Content
                 curState.EnterState();
             }
         }
+
+        private void GroundCheck()
+        {
+            Ray ray = new Ray(transform.position + Vector3.up,Vector3.down);
+
+            isGround = Physics.SphereCast(ray,
+                .5f, out RaycastHit hit, 1);
+        }
+
 
         private Vector3 GetScreenCenterWorldPoint()
         {
