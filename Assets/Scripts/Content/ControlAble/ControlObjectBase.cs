@@ -19,5 +19,6 @@ namespace Content
         public abstract void MouseDelta(Vector2 input);
         public abstract void MoveInput(Vector2 input);
         public abstract void FireInput(Define.PressEvent phase);
+        public abstract void JumpInput(Define.PressEvent phase);
     }
 }

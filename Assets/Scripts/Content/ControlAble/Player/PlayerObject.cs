@@ -30,6 +30,7 @@ namespace Content
         private float aimMaxDistance = 40;
 
         private bool isGround;
+        private bool isJumpInput = false;
 
         protected override void Initialize()
         {
@@ -61,9 +62,15 @@ namespace Content
         public void Move()
         {
             rigid.MovePosition(rigid.position + camY * velocity * Time.deltaTime);
+        }
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame && isGround)
+        public void Jump()
+        {
+            if (isGround)
+            {
+                isJumpInput = false;
                 rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            }
         }
 
         public void Rotate()
@@ -94,6 +101,20 @@ namespace Content
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             obj.transform.position = firePoint.position;
             obj.AddComponent<Rigidbody>().AddForce(GetScreenCenterWorldPoint() - transform.position, ForceMode.Impulse);
+        }
+
+        public override void JumpInput(Define.PressEvent phase)
+        {
+            switch (phase)
+            {
+                case Define.PressEvent.Down:
+                    Jump();
+                    isJumpInput = true;
+                    break;
+                case Define.PressEvent.Up:
+                    isJumpInput = false;
+                    break;
+            }
         }
 
         public void ChangeState<T>() where T : PlayerStateBase, new()

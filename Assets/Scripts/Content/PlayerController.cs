@@ -82,6 +82,22 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
         }
     }
 
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+        {
+            case InputActionPhase.Started:
+                clickTimer = Time.time;
+                OccurJumpInput(Define.PressEvent.Down);
+                break;
+            case InputActionPhase.Canceled:
+                if(clickTimer + clickDuration > Time.time)
+                    OccurJumpInput(Define.PressEvent.Click); 
+                OccurJumpInput(Define.PressEvent.Up);
+                break;
+        }
+    }
+
     #endregion
 
     private void OccurMouseInput(Vector2 input)
@@ -100,6 +116,12 @@ public class PlayerController : MonoBehaviour, Controller.IPlayerActions
     {
         foreach (ControlObjectBase controlAble in _controlAbles)
             controlAble.FireInput(phase);
+    }
+    
+    private void OccurJumpInput(Define.PressEvent phase)
+    {
+        foreach (ControlObjectBase controlAble in _controlAbles)
+            controlAble.JumpInput(phase);
     }
     
     public void SubscribeControl(ControlObjectBase controlAble)
